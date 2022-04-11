@@ -5,12 +5,11 @@ import { NivelRepository } from "../../typeorm/repositories/impl/NivelRepository
 
 
 
-
 interface IRequest {
     id: string;
 }
 
-class RemoveNivelUseCase {
+class ListOneNivelUseCase {
    async execute({ id }: IRequest): Promise<Nivel> {
         
     const nivelRepository = getCustomRepository(NivelRepository);
@@ -18,13 +17,11 @@ class RemoveNivelUseCase {
     const level = await nivelRepository.findOne(id);
 
     if(!level){
-        throw new AppError('Nivel não encontrado');
+        throw new AppError('Nível não encontrado', 404);
     }
-
-    await nivelRepository.remove(level);
 
     return level;
    } 
 }
 
-export { RemoveNivelUseCase };
+export { ListOneNivelUseCase };

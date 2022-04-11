@@ -1,4 +1,3 @@
-import { response } from "express";
 import { getCustomRepository } from "typeorm";
 import AppError from "../../../../shared/errors/AppError";
 import { Desenv } from "../../typeorm/entities/Desenv";

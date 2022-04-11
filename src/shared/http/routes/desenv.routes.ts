@@ -15,8 +15,8 @@ const updateDesenvController = new UpdateDesenvController()
 const removeDesenvController = new RemoveDesenvController();
 
 
-desenvRoutes.get("/",listDesenvController.list);
 
+desenvRoutes.get("/",listDesenvController.list);
 
 desenvRoutes.get(
     "/:id",
