@@ -15,7 +15,7 @@ class ListOneDesenvUseCase {
     const desenv = await desenvRepository.findOne(id);
 
     if(!desenv){
-        throw new AppError('Desenvolvedor não encontrado');
+        throw new AppError('Desenvolvedor não encontrado', 404);
     }
 
     return desenv;
