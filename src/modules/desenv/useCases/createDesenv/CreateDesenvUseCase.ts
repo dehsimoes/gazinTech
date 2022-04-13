@@ -7,13 +7,14 @@ import { DesenvRepository } from "../../typeorm/repositories/impl/DesenvReposito
 interface IRequest {
     nome: string;
     sexo: string;
+    nivel_id: string;
     data_nascimento: Date;
     idade: number;
     hobby: string;
 }
 
 class CreateDesenvUseCase {
-   async execute({nome, sexo, data_nascimento, idade, hobby}: IRequest): Promise<Desenv> {
+   async execute({nome, sexo, nivel_id, data_nascimento, idade, hobby}: IRequest): Promise<Desenv> {
         
     const desenvRepository = getCustomRepository(DesenvRepository);
 
@@ -25,6 +26,7 @@ class CreateDesenvUseCase {
     const desenv = desenvRepository.create({
         nome,
         sexo,
+        nivel_id,
         data_nascimento,
         idade,
         hobby

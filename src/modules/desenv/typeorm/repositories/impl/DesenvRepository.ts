@@ -12,6 +12,20 @@ export class DesenvRepository extends Repository<Desenv> {
             },
         });
 
+        
+
+        return desenv;
+    }
+
+    async findAccNivel(nome: string): Promise<Desenv> {
+        const desenv = this.findOne({
+            where: {
+                nome,
+            },
+        });
+
+        
+
         return desenv;
     }
 }

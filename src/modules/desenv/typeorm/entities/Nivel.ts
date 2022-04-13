@@ -10,8 +10,8 @@ class Nivel {
     @Column()
     nivel: String;
 
-/*     @OneToMany(type => Desenv, (desenv: Desenv) => desenv.desenv_nivel)
-    desenv: Desenv[]; */
+    @OneToMany(type => Desenv, (desenv: Desenv) => desenv.desenv_nivel)
+    desenvs: Desenv[];
 
     constructor() {
         if(!this.id) {

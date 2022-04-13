@@ -2,7 +2,10 @@ import { v4 as uuidV4} from 'uuid';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne,PrimaryColumn } from "typeorm";
 import { Nivel } from './Nivel';
 
-//export type SelectSexo = "M" | "F";
+export enum SelectSexo {
+    Masculino = "Masculino",
+    Feminino = "Feminino"
+} 
 
 @Entity("desenv")
 class Desenv {
@@ -10,22 +13,23 @@ class Desenv {
     @PrimaryColumn()
     id?: String;
 
-/*     @ManyToOne(type => Nivel, nivel => nivel.desenv) 
+    @ManyToOne(type => Nivel, (nivel: Nivel) => nivel.desenvs) 
     @JoinColumn({ name: "nivel_id"})
-    desenv_nivel: Nivel; */
+    desenv_nivel: Nivel;
+    
+    @Column()
+    nivel_id: String;
 
     @Column()
     nome: String;
 
-/*     @Column()
-    nivel_id: String; */
 
     /* @Column({
         type: "enum",
-        enum: ["M", "F"],
-        default: "ghost"
+        enum: SelectSexo,
     })
-    sexo: SelectSexo; */
+    sexo: SelectSexo;*/
+
     @Column()
     sexo: String;
 

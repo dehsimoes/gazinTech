@@ -35,6 +35,7 @@ desenvRoutes.post(
         [Segments.BODY]: {
         nome: Joi.string().required(),
         sexo: Joi.string().required(),
+        nivel_id: Joi.string().required(),
         data_nascimento: Joi.date().required(),
         idade: Joi.number().required(),
         hobby: Joi.string().required(),
@@ -53,6 +54,7 @@ desenvRoutes.put(
         [Segments.BODY]: {
             nome: Joi.string().required(),
             sexo: Joi.string().required(),
+            nivel_id: Joi.string().required(),
             data_nascimento: Joi.date().required(),
             idade: Joi.number().required(),
             hobby: Joi.string().required(),

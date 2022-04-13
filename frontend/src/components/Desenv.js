@@ -1,5 +1,5 @@
 import React from "react";
-import {Table, Button, Form} from 'react-bootstrap';
+import {Table, Button, Form, Modal} from 'react-bootstrap';
 
 class Desenv extends React.Component {
     
@@ -12,7 +12,9 @@ class Desenv extends React.Component {
             data_nascimento: '',
             idade: 0,
             sexo: '',
-            desenv: []
+            hobby: '',
+            desenv: [],
+            modalAberta: false
         }
     }
 
@@ -46,8 +48,10 @@ class Desenv extends React.Component {
                 nome: desenv.nome,
                 data_nascimento: desenv.data_nascimento,
                 idade: desenv.idade,
-                sexo: desenv.sexo
+                sexo: desenv.sexo,
+                hobby: desenv.hobby
             })
+            this.abrirModal();
         })
     }
 
@@ -82,12 +86,15 @@ class Desenv extends React.Component {
     }
 
     renderTabela() {
-        return <Table>
+        return <Table className="table table-striped table-dark mt-3">
+    
         <thead>
             <tr>
                 <th>Nome</th>
                 <th>Data de nascimento</th>
                 <th>Idade</th>
+                <th>Hobby</th>
+                <th>Nível</th>
                 <th>Opções</th>
             </tr>
         </thead>
@@ -99,6 +106,7 @@ class Desenv extends React.Component {
                         <td>{desenv.nome}</td>
                         <td>{desenv.data_nascimento}</td>
                         <td>{desenv.idade}</td>
+                        <td>{desenv.hobby}</td>
                         <td>
                             <Button variant="danger" onClick={() => this.carregarDesenv(desenv.id)}>Atualizar</Button>
                             <Button variant="danger" onClick={() => this.deletarDesenv(desenv.id)}>Excluir</Button>
@@ -108,6 +116,7 @@ class Desenv extends React.Component {
             }
             
         </tbody>
+        
     </Table>
     }
 
@@ -142,6 +151,14 @@ class Desenv extends React.Component {
             }
         )
     }
+
+    atualizaHobby = (e) => {
+        this.setState(
+            {
+                hobby: e.target.value
+            }
+        )
+    }
     
     submit() {
 
@@ -151,6 +168,7 @@ class Desenv extends React.Component {
                 data_nascimento: this.state.data_nascimento,
                 idade: this.state.idade,
                 sexo: this.state.sexo,
+                hobby: this.state.hobby
             }
             this.cadastraDesenv(desenv);
         }else {
@@ -160,6 +178,7 @@ class Desenv extends React.Component {
                 data_nascimento: this.state.data_nascimento,
                 idade: this.state.idade,
                 sexo: this.state.sexo,
+                hobby: this.state.hobby
             }
             this.cadastraDesenv(desenv);
         }
@@ -172,41 +191,81 @@ class Desenv extends React.Component {
             data_nascimento: '',
             idade: 0,
             sexo: '',
+            hobby: ''
+        })
+        this.abrirModal();
+    }
+
+    fecharModal = () => {
+        this.setState({
+            modalAberta: false
+        })
+    }
+
+    abrirModal = () => {
+        this.setState({
+            modalAberta: true
         })
     }
 
     render(){
         return(
             <div>
-                <Form>
-                    <Form.Group className="mb-3">
+                <Modal show={this.state.modalAberta} onHide={this.fecharModal}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Cadastro de Desenvolvedor</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                    <Form>
+                    <Form.Group className="mb-2">
                     <Form.Label>ID</Form.Label>
                     <Form.Control type="text" value={this.state.id} readOnly={true} />
                     </Form.Group>
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-2">
                     <Form.Label>Nome</Form.Label>
                     <Form.Control type="text" placeholder="Digite seu nome" value={this.state.nome} onChange={this.atualizaNome} />
                     </Form.Group>
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-2">
                     <Form.Label>Data de Nascimento</Form.Label>
                     <Form.Control type="date" placeholder="Digite sua data de nascimento" value={this.state.data_nascimento} onChange={this.atualizaDataNascimento}/>
                     </Form.Group>
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-2">
                     <Form.Label>Idade</Form.Label>
-                    <Form.Check type="number" placeholder="Digite sua idade" value={this.state.idade} onChange={this.atualizaIdade}/>
+                    <Form.Control type="number" placeholder="Digite sua idade" value={this.state.idade} onChange={this.atualizaIdade} />
                     </Form.Group>
-                    <Form.Group className="mb-3">
+                    <Form.Group className="mb-2">
                     <Form.Label>Sexo</Form.Label>
-                    <Form.Check type="text" placeholder="Digite seu sexo" value={this.state.sexo} onChange={this.atualizaSexo}/>
+                    <Form.Select aria-label="Default select example">
+                        <option>Selecione o Sexo</option>
+                        <option value="Masculino" onChange={this.atualizaIdade}>Masculino</option>
+                        <option value="Feminino" onChange={this.atualizaIdade}>Feminino</option>
+                        <option value="LGBTQIA" onChange={this.atualizaIdade}>LGBTQIA</option>
+                        </Form.Select>
                     </Form.Group>
-                    
+                    <Form.Group className="mb-2">
+                    <Form.Label>Hobby</Form.Label>
+                    <Form.Control type="text" placeholder="Digite seu hobby favorito" value={this.state.hobby} onChange={this.atualizaHobby} />
+                    </Form.Group>
                     <Button variant="primary" type="submit" onClick={this.submit}>
-                    Salvar
+                        Salvar
                     </Button>
-                    <Button variant="primary" type="submit" onClick={this.reset}>
+                    </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={this.fecharModal}>
+                        Fechar
+                    </Button>
+                    
+                    </Modal.Footer>
+                </Modal>
+
+                
+
+                    
+                <Button variant="primary" type="submit" onClick={this.reset}>
                     Novo
-                    </Button>
-                </Form>
+                </Button>
+                
 
                 {this.renderTabela()}
           </div>

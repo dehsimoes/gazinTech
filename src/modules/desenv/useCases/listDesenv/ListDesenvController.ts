@@ -1,5 +1,5 @@
 import { Request, Response} from 'express';
-import { ListDesenvUseCase } from '../listDesenv/ListDesenvUseCase';
+import { ListDesenvUseCase } from './ListDesenvUseCase';
 
 
 class ListDesenvController {

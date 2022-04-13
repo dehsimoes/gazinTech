@@ -1,6 +1,13 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import {MigrationInterface, QueryRunner, Table, TableForeignKey} from "typeorm";
 
 export class CreateDesenv1649448254942 implements MigrationInterface {
+
+    private fkNivelId = new TableForeignKey({
+        columnNames: ['nivel_id'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'nivel',
+        onDelete: 'SET NULL'
+    })
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
@@ -16,10 +23,10 @@ export class CreateDesenv1649448254942 implements MigrationInterface {
                         name: "nome",
                         type: "varchar"
                     },
-                  /*    {
+                    {
                         name: "nivel_id",
                         type: "uuid"
-                    }, */
+                    },
                     {
                         name: "sexo",
                         type: "varchar"
@@ -37,18 +44,10 @@ export class CreateDesenv1649448254942 implements MigrationInterface {
                         type: "varchar"
                     }
                 ],
-                   /*  foreignKeys: [
-                    {
-                        name: "FKNivelDesenv",
-                        referencedTableName: "nivel",
-                        referencedColumnNames: ["id"],
-                        columnNames: ["nivel_id"],
-                        onDelete: "SET NULL",
-                        onUpdate: "SET NULL"
-                    }
-                ], */
             })
         )
+
+        await queryRunner.createForeignKey('desenv', this.fkNivelId)
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
