@@ -83,7 +83,7 @@ class Nivel extends React.Component {
         <thead>
             <tr>
                 <th>Nivel</th>
-                {/* <th>Numero de desenvolvedores</th> */}
+                <th>Numero de desenvolvedores</th>
                 <th>Opções</th>
             </tr>
         </thead>
@@ -93,9 +93,9 @@ class Nivel extends React.Component {
                 this.state.level.map((level) => 
                     <tr>
                         <td>{level.nivel}</td>
-                        {/* <td>{level.numero_desenv}</td> */}
+                        <td>{level.numero_desenv}</td>
                         <td>
-                            <Button variant="danger" onClick={() => this.carregarNivel(level.id)}>Atualizar</Button>
+                            <Button className="m-2" variant="danger" onClick={() => this.carregarNivel(level.id)}>Atualizar</Button>
                             <Button variant="danger" onClick={() => this.deletarNivel(level.id)}>Excluir</Button>
                         </td>
                     </tr>

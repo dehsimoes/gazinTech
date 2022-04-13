@@ -1,7 +1,7 @@
 function Sobre() {
     return(
         <div>
-            <p>Esta é a página Sobre</p>
+            <p>Este foi um CRUD desenvolvido como teste para ingressar na equipe da Gazin</p>
         </div>
     );
 }

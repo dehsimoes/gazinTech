@@ -7,7 +7,7 @@ class Desenv extends React.Component {
         super(props);
 
         this.state = {
-            id: '',
+            id: 0,
             nome: '',
             nivel_id: '',
             data_nascimento: '',
@@ -60,13 +60,27 @@ class Desenv extends React.Component {
         })
     }
 
+    carregarNivel = (id) => {
+        fetch("http://localhost:3333/nivel/" + id,{method: 'GET'})
+        .then(resp => resp.json())
+        .then(level => {
+            this.setState({ 
+                id : level.id, 
+                nivel: level.nivel,
+            })
+            this.abrirModal();
+        })
+    }
+
     cadastraDesenv = (desenvs) => {
+        alert("qualquer coisa")
         fetch("http://localhost:3333/desenv",
             {method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(desenvs)
         })
         .then(resp => {
+            if(!desenvs.nome) return alert('Nome é obrigatório');
             if(resp.ok){
                 this.buscarDesenv();
             } else {
@@ -116,6 +130,7 @@ class Desenv extends React.Component {
                         <td>
                             <Button className="m-2" variant="danger" onClick={() => this.carregarDesenv(desenvs.id)}>Atualizar</Button>
                             <Button variant="danger" onClick={() => this.deletarDesenv(desenvs.id)}>Excluir</Button>
+
                         </td>
                     </tr>
                 )
@@ -167,8 +182,7 @@ class Desenv extends React.Component {
     }
     
     submit() {
-
-        if(this.state.id === ''){
+        if(this.state.id === 0){
             const desenvs = {
                 nome: this.state.nome,
                 data_nascimento: this.state.data_nascimento,
@@ -192,7 +206,7 @@ class Desenv extends React.Component {
 
     reset = () => {
         this.setState({
-            id: '',
+            id: 0,
             nome: '',
             data_nascimento: '',
             idade: 0,
@@ -265,12 +279,10 @@ class Desenv extends React.Component {
                     </Modal.Footer>
                 </Modal>
 
-                <Button variant="primary" type="submit" onClick={this.reset}>
+                <Button className="m-2" variant="primary" type="submit" onClick={this.reset}>
                     Novo
                 </Button>
-                <Button variant="primary" type="search" onClick={this.reset}>
-                    Pesquisar
-                </Button>
+
                 
 
                 {this.renderTabela()}

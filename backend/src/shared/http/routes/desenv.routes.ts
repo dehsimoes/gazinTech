@@ -5,12 +5,14 @@ import { ListOneDesenvController } from '../../../modules/desenv/useCases/listOn
 import { RemoveDesenvController } from '../../../modules/desenv/useCases/removeDesenv/RemoveDesenvController';
 import { UpdateDesenvController } from '../../../modules/desenv/useCases/updateDesenv/UpdateDesenvController';
 import { celebrate, Joi, Segments } from 'celebrate';
+import { ListDesenvByNameController } from '../../../modules/desenv/useCases/listDesenvByName/ListDesenvByNameController';
 
 const desenvRoutes = Router();
 
 const createController = new CreateDesenvController();
 const listDesenvController = new ListDesenvController();
 const listOneDesenvController = new ListOneDesenvController();
+const listDesenvByNameController = new ListDesenvByNameController();
 const updateDesenvController = new UpdateDesenvController()
 const removeDesenvController = new RemoveDesenvController();
 
@@ -26,6 +28,16 @@ desenvRoutes.get(
         },
     }),
     listOneDesenvController.listOne
+);
+
+desenvRoutes.get(
+    "/?nome",
+    celebrate({
+        [Segments.PARAMS]: {
+            nome: Joi.string().required(),
+        },
+    }),
+    listDesenvByNameController.listOne
 );
 
 

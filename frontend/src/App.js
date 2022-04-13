@@ -10,7 +10,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   return (
     <div className="App container">
-      <h1>CRUD Gazin Tech</h1>
+      <img src="https://camo.githubusercontent.com/e3f98eb77e581e011354866ba9525db2f70dc28550053c1ac6b2bac190bfd158/68747470733a2f2f7777772e67617a696e2e636f6d2e62722f696d616765732f7376672f6e65772d6c6f676f2e737667" alt="Imagem responsiva"></img>
+      
       <BrowserRouter>
 
       <Nav variant="tabs">
