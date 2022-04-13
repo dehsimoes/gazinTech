@@ -34,8 +34,8 @@ desenvRoutes.post(
     celebrate({
         [Segments.BODY]: {
         nome: Joi.string().required(),
-        sexo: Joi.string().required(),
         nivel_id: Joi.string().required(),
+        sexo: Joi.string().required(),
         data_nascimento: Joi.date().required(),
         idade: Joi.number().required(),
         hobby: Joi.string().required(),

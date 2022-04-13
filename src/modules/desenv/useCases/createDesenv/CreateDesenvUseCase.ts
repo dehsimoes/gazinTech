@@ -14,7 +14,7 @@ interface IRequest {
 }
 
 class CreateDesenvUseCase {
-   async execute({nome, sexo, nivel_id, data_nascimento, idade, hobby}: IRequest): Promise<Desenv> {
+   async execute({nome, nivel_id, sexo, data_nascimento, idade, hobby}: IRequest): Promise<Desenv> {
         
     const desenvRepository = getCustomRepository(DesenvRepository);
 
@@ -25,8 +25,8 @@ class CreateDesenvUseCase {
     }
     const desenv = desenvRepository.create({
         nome,
-        sexo,
         nivel_id,
+        sexo,
         data_nascimento,
         idade,
         hobby

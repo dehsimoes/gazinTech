@@ -16,11 +16,10 @@ class Nivel extends React.Component {
 
     componentDidMount() {
         this.buscarNivel();
-        alert('Componente foi montado');
     }
 
     buscarNivel() {
-        fetch("https://localhost:3333/nivel")
+        fetch("http://localhost:3333/nivel")
         .then(resp => resp.json())
         .then(dados => {
             this.setState({ level : dados })
@@ -28,7 +27,7 @@ class Nivel extends React.Component {
     }
 
     deletarNivel = (id) => {
-        fetch("https://localhost:3333/nivel/" + id,{method: 'DELETE'})
+        fetch("http://localhost:3333/nivel/" + id,{method: 'DELETE'})
         .then(resp => {
             if(resp.ok){
                 this.buscarNivel();

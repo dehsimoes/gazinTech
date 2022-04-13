@@ -9,11 +9,12 @@ class Desenv extends React.Component {
         this.state = {
             id: '',
             nome: '',
+            nivel_id: '',
             data_nascimento: '',
             idade: 0,
             sexo: '',
             hobby: '',
-            desenv: [],
+            desenvs: [],
             modalAberta: false
         }
     }
@@ -23,15 +24,15 @@ class Desenv extends React.Component {
     }
 
     buscarDesenv() {
-        fetch("https://localhost:3333/desenv")
+        fetch("http://localhost:3333/desenv")
         .then(resp => resp.json())
         .then(dados => {
-            this.setState({ desenv : dados })
+            this.setState({ desenvs : dados })
         })
     }
 
     deletarDesenv = (id) => {
-        fetch("https://localhost:3333/desenv/" + id,{method: 'DELETE'})
+        fetch("http://localhost:3333/desenv/" + id,{method: 'DELETE'})
         .then(resp => {
             if(resp.ok){
                 this.buscarDesenv();
@@ -40,26 +41,27 @@ class Desenv extends React.Component {
     }
 
     carregarDesenv = (id) => {
-        fetch("https://localhost:3333/desenv/" + id,{method: 'GET'})
+        fetch("http://localhost:3333/desenv/" + id,{method: 'GET'})
         .then(resp => resp.json())
-        .then(desenv => {
+        .then(desenvs => {
             this.setState({ 
-                id : desenv.id, 
-                nome: desenv.nome,
-                data_nascimento: desenv.data_nascimento,
-                idade: desenv.idade,
-                sexo: desenv.sexo,
-                hobby: desenv.hobby
+                id : desenvs.id, 
+                nome: desenvs.nome,
+                nivel: desenvs.nivel_id,
+                data_nascimento: desenvs.data_nascimento,
+                idade: desenvs.idade,
+                sexo: desenvs.sexo,
+                hobby: desenvs.hobby
             })
             this.abrirModal();
         })
     }
 
-    cadastraDesenv = (desenv) => {
-        fetch("https://localhost:3333/desenv/",
+    cadastraDesenv = (desenvs) => {
+        fetch("http://localhost:3333/desenv",
             {method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(desenv)
+            body: JSON.stringify(desenvs)
         })
         .then(resp => {
             if(resp.ok){
@@ -70,11 +72,11 @@ class Desenv extends React.Component {
         })
     }
 
-    atualizarDesenv = (desenv) => {
-        fetch("https://localhost:3333/desenv/",
+    atualizarDesenv = (desenvs) => {
+        fetch("http://localhost:3333/desenv",
             {method: 'PUT',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(desenv)
+            body: JSON.stringify(desenvs)
         })
         .then(resp => {
             if(resp.ok){
@@ -101,15 +103,16 @@ class Desenv extends React.Component {
         <tbody>
 
             {
-                this.state.desenv.map((desenv) => 
+                this.state.desenvs.map((desenvs) => 
                     <tr>
-                        <td>{desenv.nome}</td>
-                        <td>{desenv.data_nascimento}</td>
-                        <td>{desenv.idade}</td>
-                        <td>{desenv.hobby}</td>
+                        <td>{desenvs.nome}</td>
+                        <td>{desenvs.data_nascimento}</td>
+                        <td>{desenvs.idade}</td>
+                        <td>{desenvs.hobby}</td>
+                        <td>{desenvs.nivel_id}</td>
                         <td>
-                            <Button variant="danger" onClick={() => this.carregarDesenv(desenv.id)}>Atualizar</Button>
-                            <Button variant="danger" onClick={() => this.deletarDesenv(desenv.id)}>Excluir</Button>
+                            <Button variant="danger" onClick={() => this.carregarDesenv(desenvs.id)}>Atualizar</Button>
+                            <Button variant="danger" onClick={() => this.deletarDesenv(desenvs.id)}>Excluir</Button>
                         </td>
                     </tr>
                 )
@@ -163,16 +166,16 @@ class Desenv extends React.Component {
     submit() {
 
         if(this.state.id === ''){
-            const desenv = {
+            const desenvs = {
                 nome: this.state.nome,
                 data_nascimento: this.state.data_nascimento,
                 idade: this.state.idade,
                 sexo: this.state.sexo,
                 hobby: this.state.hobby
             }
-            this.cadastraDesenv(desenv);
+            this.cadastraDesenv(desenvs);
         }else {
-            const desenv = {
+            const desenvs = {
                 id: this.state.id,
                 nome: this.state.nome,
                 data_nascimento: this.state.data_nascimento,
@@ -180,7 +183,7 @@ class Desenv extends React.Component {
                 sexo: this.state.sexo,
                 hobby: this.state.hobby
             }
-            this.cadastraDesenv(desenv);
+            this.cadastraDesenv(desenvs);
         }
     }
 
@@ -237,9 +240,9 @@ class Desenv extends React.Component {
                     <Form.Label>Sexo</Form.Label>
                     <Form.Select aria-label="Default select example">
                         <option>Selecione o Sexo</option>
-                        <option value="Masculino" onChange={this.atualizaIdade}>Masculino</option>
-                        <option value="Feminino" onChange={this.atualizaIdade}>Feminino</option>
-                        <option value="LGBTQIA" onChange={this.atualizaIdade}>LGBTQIA</option>
+                        <option value="Masculino" onChange={this.atualizaSexo}>Masculino</option>
+                        <option value="Feminino" onChange={this.atualizaSexo}>Feminino</option>
+                        <option value="LGBTQIA" onChange={this.atualizaSexo}>LGBTQIA</option>
                         </Form.Select>
                     </Form.Group>
                     <Form.Group className="mb-2">

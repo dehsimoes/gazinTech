@@ -2,10 +2,10 @@ import { v4 as uuidV4} from 'uuid';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne,PrimaryColumn } from "typeorm";
 import { Nivel } from './Nivel';
 
-export enum SelectSexo {
+/* export enum SelectSexo {
     Masculino = "Masculino",
     Feminino = "Feminino"
-} 
+}  */
 
 @Entity("desenv")
 class Desenv {
