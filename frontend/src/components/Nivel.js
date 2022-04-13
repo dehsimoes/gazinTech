@@ -36,19 +36,19 @@ class Nivel extends React.Component {
     }
 
     carregarNivel = (id) => {
-        fetch("https://localhost:3333/nivel/" + id,{method: 'GET'})
+        fetch("http://localhost:3333/nivel/" + id,{method: 'GET'})
         .then(resp => resp.json())
         .then(level => {
             this.setState({ 
                 id : level.id, 
-                nome: level.nivel,
+                nivel: level.nivel,
             })
             this.abrirModal();
         })
     }
 
     cadastraNivel = (level) => {
-        fetch("https://localhost:3333/nivel/",
+        fetch("http://localhost:3333/nivel/",
             {method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(level)
@@ -62,8 +62,8 @@ class Nivel extends React.Component {
         })
     }
 
-    atualizarNivel = (level) => {
-        fetch("https://localhost:3333/nivel/",
+    atualizarLevel = (level) => {
+        fetch("http://localhost:3333/nivel/",
             {method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(level)
@@ -118,7 +118,7 @@ class Nivel extends React.Component {
     
     submit() {
 
-        if(this.state.id === ''){
+        if(this.state.id === '' || this.state.id === undefined){
             const level = {
                 nivel: this.state.nivel,
             }
@@ -128,7 +128,7 @@ class Nivel extends React.Component {
                 id: this.state.id,
                 nivel: this.state.nivel,
             }
-            this.cadastraNivel(level);
+            this.atualizarLevel(level);
         }
     }
 
@@ -166,7 +166,7 @@ class Nivel extends React.Component {
                     <Form.Control type="text" value={this.state.id} readOnly={true} />
                     </Form.Group>
                     <Form.Group className="mb-2">
-                    <Form.Label>Nome</Form.Label>
+                    <Form.Label>Nivel</Form.Label>
                     <Form.Control type="text" placeholder="Digite o nivel a ser cadastrado" value={this.state.nivel} onChange={this.atualizaNivel} />
                     </Form.Group>
                     <Button variant="primary" type="submit" onClick={this.submit}>

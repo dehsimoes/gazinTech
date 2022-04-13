@@ -36,6 +36,9 @@ class Desenv extends React.Component {
         .then(resp => {
             if(resp.ok){
                 this.buscarDesenv();
+                alert('Desenvolvedor excluído');
+            }else{
+                alert('Não foi possível excluir');
             }
         })
     }
@@ -111,7 +114,7 @@ class Desenv extends React.Component {
                         <td>{desenvs.hobby}</td>
                         <td>{desenvs.nivel_id}</td>
                         <td>
-                            <Button variant="danger" onClick={() => this.carregarDesenv(desenvs.id)}>Atualizar</Button>
+                            <Button className="m-2" variant="danger" onClick={() => this.carregarDesenv(desenvs.id)}>Atualizar</Button>
                             <Button variant="danger" onClick={() => this.deletarDesenv(desenvs.id)}>Excluir</Button>
                         </td>
                     </tr>
@@ -183,7 +186,7 @@ class Desenv extends React.Component {
                 sexo: this.state.sexo,
                 hobby: this.state.hobby
             }
-            this.cadastraDesenv(desenvs);
+            this.atualizarDesenv(desenvs);
         }
     }
 
@@ -262,11 +265,11 @@ class Desenv extends React.Component {
                     </Modal.Footer>
                 </Modal>
 
-                
-
-                    
                 <Button variant="primary" type="submit" onClick={this.reset}>
                     Novo
+                </Button>
+                <Button variant="primary" type="search" onClick={this.reset}>
+                    Pesquisar
                 </Button>
                 
 

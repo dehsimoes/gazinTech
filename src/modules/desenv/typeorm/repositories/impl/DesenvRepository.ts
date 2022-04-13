@@ -17,15 +17,31 @@ export class DesenvRepository extends Repository<Desenv> {
         return desenv;
     }
 
-    async findAccNivel(nome: string): Promise<Desenv> {
+    async findAccNivel(nivel_id: string): Promise<Desenv> {
         const desenv = this.findOne({
             where: {
-                nome,
+                nivel_id,
             },
         });
-
-        
-
         return desenv;
     }
+
+    async findByNascimento(data_nascimento: Date): Promise<Desenv> {
+        const desenv = this.findOne({
+            where: {
+                data_nascimento,
+            },
+        });
+        return desenv
+    }
+
+    async findBySexo(sexo: string): Promise<Desenv> {
+        const desenv = this.findOne({
+            where: {
+                sexo,
+            },
+        });
+        return desenv
+    }
+
 }

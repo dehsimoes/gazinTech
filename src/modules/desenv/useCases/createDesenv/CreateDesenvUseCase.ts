@@ -19,8 +19,10 @@ class CreateDesenvUseCase {
     const desenvRepository = getCustomRepository(DesenvRepository);
 
     const desenvExists = await desenvRepository.findByName(nome);
+    const desenvExistsDate = await desenvRepository.findByNascimento(data_nascimento);
+    const desenvExistsSexo = await desenvRepository.findBySexo(sexo);
 
-    if(desenvExists) {
+    if(desenvExists && desenvExistsDate && desenvExistsSexo) {
         throw new AppError('Usuário já existe');
     }
     const desenv = desenvRepository.create({
