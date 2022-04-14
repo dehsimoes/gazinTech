@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner, Table, TableForeignKey} from "typeorm";
 
-export class CreateDesenv1649448254942 implements MigrationInterface {
+export class CreateDesenv1649904254178 implements MigrationInterface {
 
     private fkNivelId = new TableForeignKey({
         columnNames: ['nivel_id'],
