@@ -10,6 +10,7 @@ class Desenv extends React.Component {
             id: 0,
             nome: '',
             nivel_id: '',
+            nivel:'',
             data_nascimento: '',
             idade: 0,
             sexo: '',
@@ -63,24 +64,16 @@ class Desenv extends React.Component {
     carregarNivel = (id) => {
         fetch("http://localhost:3333/nivel/" + id,{method: 'GET'})
         .then(resp => resp.json())
-        .then(level => {
-            this.setState({ 
-                id : level.id, 
-                nivel: level.nivel,
-            })
-            this.abrirModal();
-        })
+        .then(level => level.nivel)
     }
 
     cadastraDesenv = (desenvs) => {
-        alert("qualquer coisa")
         fetch("http://localhost:3333/desenv",
             {method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(desenvs)
         })
         .then(resp => {
-            if(!desenvs.nome) return alert('Nome é obrigatório');
             if(resp.ok){
                 this.buscarDesenv();
             } else {
@@ -104,9 +97,12 @@ class Desenv extends React.Component {
         })
     }
 
+
+
     renderTabela() {
+        
         return <Table className="table table-striped table-dark mt-3">
-    
+           
         <thead>
             <tr>
                 <th>Nome</th>
@@ -180,11 +176,20 @@ class Desenv extends React.Component {
             }
         )
     }
+
+    atualizaNivelId = (e) => {
+        this.setState(
+            {
+                nivel_id: e.target.value
+            }
+        )
+    }
     
     submit() {
-        if(this.state.id === 0){
+        if(this.state.id === '' || this.state.id === undefined){
             const desenvs = {
                 nome: this.state.nome,
+                nivel_id: this.state.nivel_id,
                 data_nascimento: this.state.data_nascimento,
                 idade: this.state.idade,
                 sexo: this.state.sexo,
@@ -195,6 +200,7 @@ class Desenv extends React.Component {
             const desenvs = {
                 id: this.state.id,
                 nome: this.state.nome,
+                nivel_id: this.state.nivel_id,
                 data_nascimento: this.state.data_nascimento,
                 idade: this.state.idade,
                 sexo: this.state.sexo,
@@ -208,6 +214,7 @@ class Desenv extends React.Component {
         this.setState({
             id: 0,
             nome: '',
+            nivel_id: '',
             data_nascimento: '',
             idade: 0,
             sexo: '',
@@ -244,6 +251,10 @@ class Desenv extends React.Component {
                     <Form.Group className="mb-2">
                     <Form.Label>Nome</Form.Label>
                     <Form.Control type="text" placeholder="Digite seu nome" value={this.state.nome} onChange={this.atualizaNome} />
+                    </Form.Group>
+                    <Form.Group className="mb-2">
+                    <Form.Label>Nivel Id</Form.Label>
+                    <Form.Control type="text" placeholder="Digite o ID do nivel" value={this.state.nivel_id} onChange={this.atualizaNivelId} />
                     </Form.Group>
                     <Form.Group className="mb-2">
                     <Form.Label>Data de Nascimento</Form.Label>

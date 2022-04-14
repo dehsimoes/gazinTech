@@ -48,12 +48,13 @@ class Nivel extends React.Component {
     }
 
     cadastraNivel = (level) => {
-        fetch("http://localhost:3333/nivel/",
+        fetch("http://localhost:3333/nivel",
             {method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(level)
         })
         .then(resp => {
+            alert(resp);
             if(resp.ok){
                 this.buscarNivel();
             } else {
@@ -62,8 +63,8 @@ class Nivel extends React.Component {
         })
     }
 
-    atualizarLevel = (level) => {
-        fetch("http://localhost:3333/nivel/",
+    atualizarLevel = (level, id) => {
+        fetch("http://localhost:3333/nivel/" + id,
             {method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(level)
@@ -116,19 +117,19 @@ class Nivel extends React.Component {
     }
 
     
-    submit() {
-
+    submit= () => {
+       
         if(this.state.id === '' || this.state.id === undefined){
             const level = {
                 nivel: this.state.nivel,
             }
+            
             this.cadastraNivel(level);
         }else {
             const level = {
-                id: this.state.id,
                 nivel: this.state.nivel,
             }
-            this.atualizarLevel(level);
+            this.atualizarLevel(level, this.state.id);
         }
     }
 
