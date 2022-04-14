@@ -54,7 +54,6 @@ class Nivel extends React.Component {
             body: JSON.stringify(level)
         })
         .then(resp => {
-            alert(resp);
             if(resp.ok){
                 this.buscarNivel();
             } else {

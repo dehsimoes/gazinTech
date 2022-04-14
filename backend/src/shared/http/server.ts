@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import express, { NextFunction,Request, Response } from 'express';
 import 'express-async-errors'
 import cors from 'cors';
+import { pagination } from 'typeorm-pagination';
 import { errors } from 'celebrate';
 import AppError from '../errors/AppError';
 import { routes } from './routes';
@@ -11,6 +12,7 @@ const app = express();
 
 app.use(express.json());
 
+app.use(pagination);
 
 app.use((req, res, next) => {
 	//Qual site tem permissão de realizar a conexão, no exemplo abaixo está o "*" indicando que qualquer site pode fazer a conexão
